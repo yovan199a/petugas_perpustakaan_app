@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:dio/dio.dart' as dio;
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -10,6 +12,7 @@ class LoginController extends GetxController {
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   final TextEditingController usernameController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
+
   final count = 0.obs;
 
   @override
@@ -20,6 +23,11 @@ class LoginController extends GetxController {
   @override
   void onReady() {
     super.onReady();
+    String status = StorageProvider.read(StorageKey.status);
+    log("status : $status");
+    if(status == "logged"){
+      Get.offAllNamed(Routes.HOME);
+    }
   }
 
   @override
@@ -41,7 +49,7 @@ class LoginController extends GetxController {
             data: dio.FormData.fromMap(
                 {"username": usernameController.text.toString(), "password": passwordController.text.toString()}));
         if (response.statusCode == 200) {
-          await StorageProvider.write(StorageKey.status, "Logged");
+          await StorageProvider.write(StorageKey.status, "logged");
           Get.offAllNamed(Routes.HOME);
         } else {
           Get.snackbar("Sorry", "Login Gagal", backgroundColor: Colors.orange);

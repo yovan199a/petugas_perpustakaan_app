@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
+import 'package:petugas_perpustakaaan_app/app/routes/app_pages.dart';
 
 import '../controllers/home_controller.dart';
 
@@ -15,9 +16,13 @@ class HomeView extends GetView<HomeController> {
         centerTitle: true,
       ),
       body: Center(
-      child: Text (
-        'HomeView fkfhdsofh',
-        style: TextStyle(fontSize: 20),
+      child: Column(
+        children: [
+          ElevatedButton(onPressed: ()=>Get.toNamed(Routes.BOOK),
+              child: Text("Buku")),
+          ElevatedButton(onPressed: ()=>Get.toNamed(Routes.PEMINJAMAN),
+              child: Text("Pinjam"))
+        ]
       )
       ),
     );
